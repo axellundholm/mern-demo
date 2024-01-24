@@ -33,6 +33,8 @@ router.post("/", async (req, res) => {
 
     const newCustomer = {};
 
+    // Todo: some slight timing issues in the below code
+
     lemAPI.LegalEntitiesApi.createLegalEntity({
       type: req.body.type,
       organization: {
