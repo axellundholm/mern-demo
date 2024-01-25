@@ -15,7 +15,6 @@ const bclClient = new Client({
   apiKey: process.env.BCL_API_KEY,
   environment: "TEST",
 });
-
 const lemAPI = new LegalEntityManagementAPI(lemClient);
 const bclAPI = new BalancePlatformAPI(bclClient);
 
@@ -30,8 +29,6 @@ router.post("/", async (req, res) => {
         message: "Send all required fields",
       });
     }
-
-    // Todo: some slight timing issues in the below code
 
     const lemResponse = await lemAPI.LegalEntitiesApi.createLegalEntity({
       type: req.body.type,
@@ -61,7 +58,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", async (_, res) => {
   try {
     const customers = await Customer.find({});
 
