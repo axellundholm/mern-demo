@@ -31,11 +31,9 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const newCustomer = {};
-
     // Todo: some slight timing issues in the below code
 
-    lemAPI.LegalEntitiesApi.createLegalEntity({
+    const lemResponse = await lemAPI.LegalEntitiesApi.createLegalEntity({
       type: req.body.type,
       organization: {
         legalName: req.body.organization.legalName,
@@ -43,22 +41,20 @@ router.post("/", async (req, res) => {
           country: req.body.organization.registeredAddress.country,
         },
       },
-    })
-      .then((lemResponse) => {
-        bclAPI.AccountHoldersApi.createAccountHolder({
-          legalEntityId: lemResponse.id,
-        })
-          .then((bclResponse) => {
-            newCustomer.accountHolderId = bclResponse.id;
-            newCustomer.legalEntityId = bclResponse.legalEntityId;
-          })
-          .then(() => {
-            const customer = Customer.create(newCustomer).then(() => {
-              return res.status(200).send(customer);
-            });
-          });
-      })
-      .catch((error) => console.log(error));
+    });
+
+    const bclResponse = await bclAPI.AccountHoldersApi.createAccountHolder({
+      legalEntityId: lemResponse.id,
+    });
+
+    const newCustomer = {
+      accountHolderId: bclResponse.id,
+      legalEntityId: bclResponse.legalEntityId,
+    };
+
+    const customer = await Customer.create(newCustomer);
+
+    return res.status(200).send(customer);
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
