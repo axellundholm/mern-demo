@@ -13,15 +13,6 @@ app.use(express.json());
 
 app.use(cors());
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type"],
-//   })
-// );
-
-// Route handler for the /hello endpoint
 app.get("/hello", (req, res) => {
   res.send("Hello, World!");
 });
