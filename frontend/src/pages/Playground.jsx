@@ -1,54 +1,92 @@
-import {
-  Description,
-  Field,
-  Fieldset,
-  Input,
-  Label,
-  Legend,
-  Select,
-} from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import clsx from "clsx";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+
+const categories = [
+  {
+    name: "Recent",
+    posts: [
+      {
+        id: 1,
+        title: "Does drinking coffee make you smarter?",
+        date: "5h ago",
+        commentCount: 5,
+        shareCount: 2,
+      },
+      {
+        id: 2,
+        title: "So you've bought coffee... now what?",
+        date: "2h ago",
+        commentCount: 3,
+        shareCount: 2,
+      },
+    ],
+  },
+  {
+    name: "Popular",
+    posts: [
+      {
+        id: 1,
+        title: "Is tech making coffee better or worse?",
+        date: "Jan 7",
+        commentCount: 29,
+        shareCount: 16,
+      },
+      {
+        id: 2,
+        title: "The most innovative things happening in coffee",
+        date: "Mar 19",
+        commentCount: 24,
+        shareCount: 12,
+      },
+    ],
+  },
+];
 
 export default function Example() {
   return (
-    <div className="w-full max-w-lg px-4 bg-gray-700">
-      <Fieldset className="space-y-6 rounded-xl bg-white/5 p-6 sm:p-10">
-        <Legend className="text-base/7 font-semibold text-white">
-          Organization onboarding
-        </Legend>
-        <Field>
-          <Label className="text-sm/6 font-medium text-white">Legal name</Label>
-          <Input
-            className={clsx(
-              "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-              "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
-            )}
-          />
-        </Field>
-        <Field>
-          <Label className="text-sm/6 font-medium text-white">Country</Label>
-          <Description className="text-sm/6 text-white/50">
-            The country where your business is registered.
-          </Description>
-          <div className="relative">
-            <Select
-              className={clsx(
-                "mt-3 block w-full appearance-none rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
-                "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25",
-                // Make the text of each option black on Windows
-                "*:text-black"
-              )}
-            >
-              <option>Sweden</option>
-            </Select>
-            <ChevronDownIcon
-              className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60"
-              aria-hidden="true"
-            />
-          </div>
-        </Field>
-      </Fieldset>
+    <div className="flex h-screen w-full justify-center px-4 pt-24">
+      <div className="w-full max-w-md">
+        <TabGroup>
+          <TabList className="flex gap-4">
+            {categories.map(({ name }) => (
+              <Tab
+                key={name}
+                className="rounded-full px-3 py-1 text-sm/6 font-semibold text-white focus:outline-none data-[hover]:bg-white/5 data-[selected]:bg-white/10 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-white"
+              >
+                {name}
+              </Tab>
+            ))}
+          </TabList>
+          <TabPanels className="mt-3">
+            {categories.map(({ name, posts }) => (
+              <TabPanel key={name} className="rounded-xl bg-white/5 p-3">
+                <ul>
+                  {posts.map((post) => (
+                    <li
+                      key={post.id}
+                      className="relative rounded-md p-3 text-sm/6 transition hover:bg-white/5"
+                    >
+                      <a href="#" className="font-semibold text-white">
+                        <span className="absolute inset-0" />
+                        {post.title}
+                      </a>
+                      <ul
+                        className="flex gap-2 text-white/50"
+                        aria-hidden="true"
+                      >
+                        <li>{post.date}</li>
+                        <li aria-hidden="true">&middot;</li>
+                        <li>{post.commentCount} comments</li>
+                        <li aria-hidden="true">&middot;</li>
+                        <li>{post.shareCount} shares</li>
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </TabPanel>
+            ))}
+          </TabPanels>
+        </TabGroup>
+      </div>
     </div>
   );
 }
