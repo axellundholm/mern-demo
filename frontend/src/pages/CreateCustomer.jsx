@@ -38,43 +38,43 @@ const createCustomer = () => {
   return (
     <div className="p-4">
       <BackButton />
-      <h1 className="text-3xl my-4">Create customer</h1>
+      <h1 className="my-4 text-3xl">Create customer</h1>
       {loading && <Spinner />}
-      <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
+      <div className="mx-auto flex w-[600px] flex-col rounded-xl border-2 border-sky-400 p-4">
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Type</label>
+          <label className="mr-4 text-xl text-gray-500">Type</label>
           <input
             type="text"
             value={type}
             onChange={(e) => {
               setType(e.target.value);
             }}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="w-full border-2 border-gray-500 px-4 py-2"
           />
         </div>
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Legal name</label>
+          <label className="mr-4 text-xl text-gray-500">Legal name</label>
           <input
             type="text"
             value={legalName}
             onChange={(e) => {
               setLegalName(e.target.value);
             }}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="w-full border-2 border-gray-500 px-4 py-2"
           />
         </div>
         <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Country</label>
+          <label className="mr-4 text-xl text-gray-500">Country</label>
           <input
             type="text"
             value={country}
             onChange={(e) => {
               setCountry(e.target.value);
             }}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
+            className="w-full border-2 border-gray-500 px-4 py-2"
           />
         </div>
-        <button className="p-2 bg-sky-300 m-8" onClick={handleSaveCustomer}>
+        <button className="m-8 bg-sky-300 p-2" onClick={handleSaveCustomer}>
           Submit
         </button>
       </div>

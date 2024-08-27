@@ -26,21 +26,21 @@ const ShowCustomer = () => {
   return (
     <div className="p-4">
       <BackButton />
-      <h1 className="text-3xl my-4"> Show Customer</h1>
+      <h1 className="my-4 text-3xl"> Show Customer</h1>
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4">
+        <div className="flex w-fit flex-col rounded-xl border-2 border-sky-400 p-4">
           <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Id</span>
+            <span className="mr-4 text-xl text-gray-500">Id</span>
             <span>{customer._id}</span>
           </div>
           <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">Legal Entity Id</span>
+            <span className="mr-4 text-xl text-gray-500">Legal Entity Id</span>
             <span>{customer.legalEntityId}</span>
           </div>
           <div className="my-4">
-            <span className="text-xl mr-4 text-gray-500">
+            <span className="mr-4 text-xl text-gray-500">
               Account Holder Id
             </span>
             <span>{customer.accountHolderId}</span>

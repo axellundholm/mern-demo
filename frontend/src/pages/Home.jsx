@@ -25,10 +25,10 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl my-8"> Customers List</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="my-8 text-3xl"> Customers List</h1>
         <Link to="/customers/create">
-          <MdOutlineAddBox className="text-sky-800 text-4xl" />
+          <MdOutlineAddBox className="text-4xl text-sky-800" />
         </Link>
       </div>
       {loading ? (
@@ -37,29 +37,29 @@ const Home = () => {
         <table className="w-full border-separate border-spacing-2">
           <thead>
             <tr>
-              <th className="border border-slate-600 rounded-md">No</th>
-              <th className="border border-slate-600 rounded-md max-md:hidden">
+              <th className="rounded-md border border-slate-600">No</th>
+              <th className="rounded-md border border-slate-600 max-md:hidden">
                 Account Holder Id
               </th>
-              <th className="border border-slate-600 rounded-md">
+              <th className="rounded-md border border-slate-600">
                 Legal Entity Id
               </th>
-              <th className="border border-slate-600 rounded-md">Operations</th>
+              <th className="rounded-md border border-slate-600">Operations</th>
             </tr>
           </thead>
           <tbody>
             {customers.map((customer, index) => (
               <tr key={customer._id} className="h-8">
-                <td className="border border-slate-700 rounded-md text-center">
+                <td className="rounded-md border border-slate-700 text-center">
                   {index + 1}
                 </td>
-                <td className="border border-slate-700 rounded-md text-center max-md:hidden">
+                <td className="rounded-md border border-slate-700 text-center max-md:hidden">
                   {customer.accountHolderId}
                 </td>
-                <td className="border border-slate-700 rounded-md text-center">
+                <td className="rounded-md border border-slate-700 text-center">
                   {customer.legalEntityId}
                 </td>
-                <td className="border border-slate-700 rounded-md text-center">
+                <td className="rounded-md border border-slate-700 text-center">
                   <div className="flex justify-center gap-x-4">
                     <Link to={`/customers/details/${customer._id}`}>
                       <BsInfoCircle className="text-2xl text-green-800" />
