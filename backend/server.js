@@ -21,11 +21,6 @@ app.use(cors());
 //   })
 // );
 
-// Route handler for the /hello endpoint
-app.get("/hello", (req, res) => {
-  res.send("Hello, World!");
-});
-
 app.get("/", (req, res) => {
   console.log("Loading homepage");
   return res.status(200).send("Welcome to AxelCorp onboarding");
