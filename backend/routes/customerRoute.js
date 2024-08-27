@@ -18,7 +18,36 @@ const bclClient = new Client({
 const lemAPI = new LegalEntityManagementAPI(lemClient);
 const bclAPI = new BalancePlatformAPI(bclClient);
 
-router.post("/", async (req, res) => {
+router.get("/sync", async (req, res) => {
+  try {
+    const _ = await Customer.deleteMany();
+
+    const bclResponse =
+      await bclAPI.PlatformApi.getAllAccountHoldersUnderBalancePlatform(
+        "AxelCorpBP",
+        null,
+        100
+      );
+    const activeAccountHolders = bclResponse.accountHolders.filter(
+      (ah) => ah.status != "closed"
+    );
+
+    activeAccountHolders.forEach(async (ah) => {
+      const newCustomer = {
+        accountHolderId: ah.id,
+        legalEntityId: ah.legalEntityId,
+      };
+      let _ = await Customer.create(newCustomer);
+    });
+
+    res.status(200).send(activeAccountHolders);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.post("/", async (_, res) => {
   try {
     if (
       !req.body.type ||
