@@ -64,9 +64,6 @@ const Home = () => {
                     <Link to={`/customers/details/${customer._id}`}>
                       <BsInfoCircle className="text-2xl text-green-800" />
                     </Link>
-                    <Link to={`/customers/edit/${customer._id}`}>
-                      <AiOutlineEdit className="text-2xl text-green-800" />
-                    </Link>
                     <Link to={`/customers/delete/${customer._id}`}>
                       <MdOutlineDelete className="text-2xl text-green-800" />
                     </Link>
