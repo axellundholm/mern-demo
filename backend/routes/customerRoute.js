@@ -3,6 +3,8 @@ import { Customer } from "../models/customerModel.js";
 import "dotenv/config";
 
 import pkg from "@adyen/api-library";
+import { LegalEntityInfo } from "@adyen/api-library/lib/src/typings/legalEntityManagement/legalEntityInfo.js";
+import { LegalEntityInfoRequiredType } from "@adyen/api-library/lib/src/typings/legalEntityManagement/legalEntityInfoRequiredType.js";
 const { Client, BalancePlatformAPI, LegalEntityManagementAPI } = pkg;
 
 const router = express.Router();
@@ -47,7 +49,17 @@ router.get("/sync", async (req, res) => {
   }
 });
 
-router.post("/", async (_, res) => {
+router.post("/test", async (req, res) => {
+  try {
+    console.log(req.body);
+    return res.status(200).send("success");
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.post("/", async (req, res) => {
   try {
     if (
       !req.body.type ||
@@ -60,13 +72,7 @@ router.post("/", async (_, res) => {
     }
 
     const lemResponse = await lemAPI.LegalEntitiesApi.createLegalEntity({
-      type: req.body.type,
-      organization: {
-        legalName: req.body.organization.legalName,
-        registeredAddress: {
-          country: req.body.organization.registeredAddress.country,
-        },
-      },
+      LegalEntityInfoRequiredType: req.body,
     });
 
     const bclResponse = await bclAPI.AccountHoldersApi.createAccountHolder({
