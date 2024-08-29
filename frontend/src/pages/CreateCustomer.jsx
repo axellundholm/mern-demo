@@ -3,6 +3,7 @@ import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ArrowPathIcon } from "@heroicons/react/20/solid";
 
 const createCustomer = () => {
   const [type, setType] = useState("");
@@ -39,7 +40,7 @@ const createCustomer = () => {
     <div className="p-4">
       <BackButton />
       <h1 className="my-4 text-3xl">Create customer</h1>
-      {loading && <Spinner />}
+
       <div className="mx-auto flex w-[600px] flex-col rounded-xl border-2 border-sky-400 p-4">
         <div className="my-4">
           <label className="mr-4 text-xl text-gray-500">Type</label>
@@ -74,7 +75,11 @@ const createCustomer = () => {
             className="w-full border-2 border-gray-500 px-4 py-2"
           />
         </div>
-        <button className="m-8 bg-sky-300 p-2" onClick={handleSaveCustomer}>
+        <button
+          className="m-8 flex justify-center bg-sky-300 p-2"
+          onClick={handleSaveCustomer}
+        >
+          {loading && <ArrowPathIcon className="mx-1.5 h-5 animate-spin" />}
           Submit
         </button>
       </div>

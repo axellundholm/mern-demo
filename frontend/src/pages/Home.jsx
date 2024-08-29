@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
+import { ArrowPathIcon } from "@heroicons/react/20/solid";
 
 const Home = () => {
   const [customers, setCustomers] = useState([]);
@@ -32,7 +33,7 @@ const Home = () => {
         </Link>
       </div>
       {loading ? (
-        <Spinner />
+        <ArrowPathIcon className="h-10 w-10 animate-spin" />
       ) : (
         <table className="w-full border-separate border-spacing-2">
           <thead>
