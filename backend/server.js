@@ -23,7 +23,7 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   console.log("Loading homepage");
-  return res.status(200).send("Welcome to AxelCorp onboarding");
+  return res.status(200).send("Welcome to AxelCorp onboarding...");
 });
 
 app.use("/customers", customerRoute);
