@@ -72,7 +72,19 @@ router.post("/", async (req, res) => {
     }
 
     const lemResponse = await lemAPI.LegalEntitiesApi.createLegalEntity({
-      LegalEntityInfoRequiredType: req.body,
+      type: "organization",
+      organization: {
+        legalName: req.body.organization.legalName,
+        registrationNumber: req.body.organization.registrationNumber,
+        vatNumber: req.body.organization.vatNumber,
+        type: req.body.organization.type,
+        registeredAddress: {
+          country: req.body.organization.registeredAddress.country,
+          city: req.body.organization.registeredAddress.city,
+          postalCode: req.body.organization.registeredAddress.postalCode,
+          street: req.body.organization.registeredAddress.street,
+        },
+      },
     });
 
     const bclResponse = await bclAPI.AccountHoldersApi.createAccountHolder({
