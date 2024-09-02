@@ -84,6 +84,18 @@ const AdvancedOrganizationForm = () => {
         console.log(error);
       });
   };
+
+  const handlePrefillCustomer = () => {
+    setLegalName("Company AB");
+    setRegistrationNumber("555555-5555");
+    setVatNumber("SE555555555501");
+    setType("privateCompany");
+    setCountry("SE");
+    setCity("Stockholm");
+    setPostalCode("111 22");
+    setStreet("Kungsbron 2");
+  };
+
   return (
     <div className="w-full max-w-lg px-4">
       <Fieldset className="space-y-6 rounded-xl p-6 sm:p-10">
@@ -241,6 +253,12 @@ const AdvancedOrganizationForm = () => {
           className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 align-text-top text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
         >
           Submit
+        </Button>
+        <Button
+          onClick={handlePrefillCustomer}
+          className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 align-text-top text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
+        >
+          Prefill
         </Button>
       </Fieldset>
     </div>
