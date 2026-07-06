@@ -11,8 +11,8 @@ import {
   Select,
 } from "@headlessui/react";
 import { ArrowPathIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
-import axios from "axios";
 import clsx from "clsx";
+import { createCustomer } from "../api/customers";
 
 const AdvancedOrganizationForm = () => {
   const navigate = useNavigate();
@@ -73,15 +73,12 @@ const AdvancedOrganizationForm = () => {
         },
       },
     };
-    console.log(data);
-    axios
-      .post("http://localhost:3000/customers", data)
+    createCustomer(data)
       .then(() => {
         navigate("/playground");
       })
       .catch((error) => {
-        alert("An error happend");
-        console.log(error);
+        alert(error.response?.data?.message || "An error occurred");
       });
   };
 

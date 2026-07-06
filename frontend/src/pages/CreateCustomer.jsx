@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BackButton from "../components/BackButton";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
+import { createCustomer as createCustomerRequest } from "../api/customers";
 
-const createCustomer = () => {
+const CreateCustomer = () => {
   const [type, setType] = useState("");
   const [legalName, setLegalName] = useState("");
   const [country, setCountry] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const handleSaveCustomer = () => {
     const data = {
@@ -20,18 +21,17 @@ const createCustomer = () => {
         },
       },
     };
-    console.log(data);
     setLoading(true);
-    axios
-      .post("http://localhost:3000/customers", data)
+    setError(null);
+    createCustomerRequest(data)
       .then(() => {
-        setLoading(false);
         navigate("/");
       })
-      .catch((error) => {
+      .catch((err) => {
+        setError(err.response?.data?.message || "Failed to create customer");
+      })
+      .finally(() => {
         setLoading(false);
-        alert("An error happend");
-        console.log(error);
       });
   };
 
@@ -41,6 +41,11 @@ const createCustomer = () => {
       <h1 className="my-4 text-3xl">Create customer</h1>
 
       <div className="mx-auto flex w-[600px] flex-col rounded-xl border-2 border-sky-400 p-4">
+        {error && (
+          <p className="mb-4 rounded-md border border-red-400 bg-red-50 p-4 text-red-700">
+            {error}
+          </p>
+        )}
         <div className="my-4">
           <label className="mr-4 text-xl text-gray-500">Type</label>
           <input
@@ -86,4 +91,4 @@ const createCustomer = () => {
   );
 };
 
-export default createCustomer;
+export default CreateCustomer;

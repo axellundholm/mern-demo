@@ -1,0 +1,33 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGODB_URL: mongodb://mongo:27017/mern-demo
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo-data:

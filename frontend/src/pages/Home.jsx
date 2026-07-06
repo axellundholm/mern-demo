@@ -1,28 +1,12 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Spinner from "../components/Spinner";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import { ArrowPathIcon } from "@heroicons/react/20/solid";
+import { useCustomers } from "../hooks/useCustomers";
 
 const Home = () => {
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:3000/customers")
-      .then((res) => {
-        setCustomers(res.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        setLoading(false);
-      });
-  }, []);
+  const { customers, loading, error } = useCustomers();
 
   return (
     <div className="p-4">
@@ -34,6 +18,14 @@ const Home = () => {
       </div>
       {loading ? (
         <ArrowPathIcon className="h-10 w-10 animate-spin" />
+      ) : error ? (
+        <p className="rounded-md border border-red-400 bg-red-50 p-4 text-red-700">
+          {error}
+        </p>
+      ) : customers.length === 0 ? (
+        <p className="rounded-md border border-slate-300 bg-slate-50 p-4 text-slate-600">
+          No customers yet.
+        </p>
       ) : (
         <table className="w-full border-separate border-spacing-2">
           <thead>
@@ -64,6 +56,9 @@ const Home = () => {
                   <div className="flex justify-center gap-x-4">
                     <Link to={`/customers/details/${customer._id}`}>
                       <BsInfoCircle className="text-2xl text-green-800" />
+                    </Link>
+                    <Link to={`/customers/edit/${customer._id}`}>
+                      <AiOutlineEdit className="text-2xl text-sky-800" />
                     </Link>
                     <Link to={`/customers/delete/${customer._id}`}>
                       <MdOutlineDelete className="text-2xl text-green-800" />

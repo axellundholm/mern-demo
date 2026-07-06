@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
+import { getCustomer } from "../api/customers";
 
 const ShowCustomer = () => {
-  const [customer, setCustomer] = useState({});
+  const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:3000/customers/${id}`)
+    getCustomer(id)
       .then((res) => {
         setCustomer(res.data);
-        setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        setError(err.response?.data?.message || "Failed to load customer");
+      })
+      .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div className="p-4">
@@ -29,6 +30,10 @@ const ShowCustomer = () => {
       <h1 className="my-4 text-3xl"> Show Customer</h1>
       {loading ? (
         <Spinner />
+      ) : error ? (
+        <p className="rounded-md border border-red-400 bg-red-50 p-4 text-red-700">
+          {error}
+        </p>
       ) : (
         <div className="flex w-fit flex-col rounded-xl border-2 border-sky-400 p-4">
           <div className="my-4">
